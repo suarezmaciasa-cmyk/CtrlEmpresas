@@ -3047,7 +3047,112 @@ function loadAllClientes() {
       }
     }
   } catch(e) {}
-  return [];
+  // ── Primera vez: cargar empresas de demo ──
+  var demos = getDefaultDemoClientes();
+  try { localStorage.setItem(CLIENTES_KEY, JSON.stringify(demos)); } catch(e) {}
+  return demos;
+}
+
+function getDefaultDemoClientes() {
+  return [
+  {
+    "id":"demo_strong_sport","configured":true,
+    "empresa":{"nombre":"Strong Sport","sector":"Manufactura","empleados":"40","moneda":"MXN","periodo":"H1 2026","anio":2026,"mesInicio":1},
+    "budget":{"ing_sus":9000,"ing_srv":100,"gas_cogs":6000,"gas_nom":20,"gas_mkt":300,"gas_tech":10,"gas_gen":20,"real_ing_sus":8500,"real_ing_srv":90,"real_gas_cogs":5800,"real_gas_nom":22,"real_gas_mkt":280,"real_gas_tech":9,"real_gas_gen":18},
+    "historico":{"ingresos":[1200,1350,1500,1650,1800,2000],"gastos":[1050,1100,1200,1300,1400,1500]},
+    "centros":[
+      {"id":"c1","nombre":"Comercial",  "responsable":"Alicia", "tipo":"utilidad",  "meta":7996,"real":6200,"bonoBase":800, "bonoTipo":"meta"},
+      {"id":"c2","nombre":"Marketing",  "responsable":"Oscar",  "tipo":"inversion", "meta":50,  "real":42,  "bonoBase":500, "bonoTipo":"meta"},
+      {"id":"c3","nombre":"Operaciones","responsable":"Denisse","tipo":"costo",     "meta":72,  "real":65,  "bonoBase":700, "bonoTipo":"meta"}
+    ],
+    "bsc":{
+      "financiera": {"titulo":"Financiera","icon":"💰","kpis":[
+        {"nombre":"Crecimiento ingresos YoY","desc":"% crecimiento vs año anterior","meta":30,"real":24,"unidad":"%","peso":0.35,"invertido":false},
+        {"nombre":"Margen EBITDA","desc":"EBITDA / Ingresos totales","meta":18,"real":14,"unidad":"%","peso":0.35,"invertido":false},
+        {"nombre":"Burn rate mensual","desc":"Efectivo consumido por mes","meta":500,"real":420,"unidad":"k MXN","peso":0.30,"invertido":true}
+      ]},
+      "cliente":    {"titulo":"Clientes","icon":"🎯","kpis":[
+        {"nombre":"NPS","desc":"Net Promoter Score","meta":50,"real":62,"unidad":"pts","peso":0.50,"invertido":false},
+        {"nombre":"Churn mensual","desc":"% clientes que cancelan","meta":2,"real":1.8,"unidad":"%","peso":0.50,"invertido":true}
+      ]},
+      "procesos":   {"titulo":"Procesos internos","icon":"⚙️","kpis":[
+        {"nombre":"Uptime plataforma","desc":"% disponibilidad","meta":99.5,"real":99.2,"unidad":"%","peso":0.50,"invertido":false},
+        {"nombre":"Tickets resueltos <24h","desc":"% tickets cerrados en 24h","meta":85,"real":88,"unidad":"%","peso":0.50,"invertido":false}
+      ]},
+      "aprendizaje":{"titulo":"Aprendizaje","icon":"🌱","kpis":[
+        {"nombre":"Satisfacción equipo","desc":"eNPS interno","meta":75,"real":80,"unidad":"pts","peso":0.50,"invertido":false},
+        {"nombre":"Retención de talento","desc":"% personas que no renuncian","meta":90,"real":92,"unidad":"%","peso":0.50,"invertido":false}
+      ]}
+    },
+    "balance":{"efectivo":500,"cxc":1200,"inv_cp":300,"activo_fijo":4500,"cxp":600,"nom_pagar":200,"deuda_cp":800,"deuda_lp":2000,"capital":1500,"util_ret":400},
+    "org":{
+      "hps":[
+        {"nombre":"Alicia Martínez","area":"Comercial",  "posicion":"Director Comercial","desempeno":9.5,"potencial":9.5,"liderazgo":9,"riesgoFuga":"Bajo", "esLider":true},
+        {"nombre":"Oscar Ramírez",  "area":"Marketing",  "posicion":"CMO",               "desempeno":7,  "potencial":7,  "liderazgo":8,"riesgoFuga":"Medio","esLider":true}
+      ],
+      "clima":{
+        "Comercial":   {"enps":"promotor","carga":"adecuada","confianza":"total", "proposito":"mision"},
+        "Marketing":   {"enps":"alto",    "carga":"alta",    "confianza":"alta",  "proposito":"alto"},
+        "Operaciones": {"enps":"medio",   "carga":"adecuada","confianza":"media", "proposito":"alto"}
+      },
+      "tensiones":[
+        {"key":"Comercial||Marketing",   "nivel":"baja",   "causa":"Alineación de mensajes"},
+        {"key":"Comercial||Operaciones", "nivel":"media",  "causa":"Tiempos de entrega vs promesas de venta"},
+        {"key":"Marketing||Operaciones", "nivel":"ninguna","causa":""}
+      ]
+    },
+    "clima":{"areas":[],"dimensiones":[],"scores":[]}
+  },
+  {
+    "id":"demo_yolp","configured":true,
+    "empresa":{"nombre":"YOLP","sector":"SaaS / Software","empleados":"12","moneda":"MXN","periodo":"H1 2026","anio":2026,"mesInicio":1},
+    "budget":{"ing_sus":4500,"ing_srv":200,"gas_cogs":900,"gas_nom":800,"gas_mkt":400,"gas_tech":300,"gas_gen":150,"real_ing_sus":3800,"real_ing_srv":180,"real_gas_cogs":820,"real_gas_nom":810,"real_gas_mkt":380,"real_gas_tech":290,"real_gas_gen":140},
+    "historico":{"ingresos":[600,650,720,700,780,850],"gastos":[420,450,480,460,500,520]},
+    "centros":[
+      {"id":"c4","nombre":"Tecnología","responsable":"Mario","tipo":"costo",    "meta":300, "real":290, "bonoBase":600,"bonoTipo":"meta"},
+      {"id":"c5","nombre":"Ventas",    "responsable":"Sofía","tipo":"utilidad", "meta":4500,"real":3800,"bonoBase":900,"bonoTipo":"meta"},
+      {"id":"c6","nombre":"I+D",       "responsable":"Luis", "tipo":"inversion","meta":200, "real":180, "bonoBase":500,"bonoTipo":"meta"}
+    ],
+    "bsc":{
+      "financiera": {"titulo":"Financiera","icon":"💰","kpis":[
+        {"nombre":"MRR","desc":"Monthly Recurring Revenue","meta":380,"real":317,"unidad":"k MXN","peso":0.40,"invertido":false},
+        {"nombre":"CAC","desc":"Costo adquisición cliente","meta":3000,"real":3800,"unidad":"MXN","peso":0.30,"invertido":true},
+        {"nombre":"Margen EBITDA","desc":"EBITDA / Ingresos","meta":22,"real":18,"unidad":"%","peso":0.30,"invertido":false}
+      ]},
+      "cliente":    {"titulo":"Clientes","icon":"🎯","kpis":[
+        {"nombre":"NPS","desc":"Net Promoter Score","meta":55,"real":48,"unidad":"pts","peso":0.40,"invertido":false},
+        {"nombre":"Churn mensual","desc":"% cancelaciones/mes","meta":2,"real":2.5,"unidad":"%","peso":0.35,"invertido":true},
+        {"nombre":"LTV promedio","desc":"Valor de vida del cliente","meta":45000,"real":38000,"unidad":"MXN","peso":0.25,"invertido":false}
+      ]},
+      "procesos":   {"titulo":"Procesos","icon":"⚙️","kpis":[
+        {"nombre":"Uptime","desc":"Disponibilidad del servicio","meta":99.9,"real":99.7,"unidad":"%","peso":0.50,"invertido":false},
+        {"nombre":"Deploy frequency","desc":"Deploys por semana","meta":3,"real":2,"unidad":"deploys","peso":0.50,"invertido":false}
+      ]},
+      "aprendizaje":{"titulo":"Aprendizaje","icon":"🌱","kpis":[
+        {"nombre":"eNPS equipo","desc":"Employee NPS","meta":70,"real":65,"unidad":"pts","peso":0.50,"invertido":false},
+        {"nombre":"Features entregadas","desc":"Features/sprint","meta":8,"real":6,"unidad":"features","peso":0.50,"invertido":false}
+      ]}
+    },
+    "balance":{"efectivo":800,"cxc":400,"inv_cp":150,"activo_fijo":600,"cxp":200,"nom_pagar":150,"deuda_cp":0,"deuda_lp":500,"capital":800,"util_ret":300},
+    "org":{
+      "hps":[
+        {"nombre":"Mario Torres","area":"Tecnología","posicion":"CTO",              "desempeno":9.5,"potencial":9.5,"liderazgo":8,"riesgoFuga":"Bajo", "esLider":true},
+        {"nombre":"Sofía Vega",  "area":"Ventas",    "posicion":"Director Comercial","desempeno":7,  "potencial":7,  "liderazgo":7,"riesgoFuga":"Medio","esLider":false}
+      ],
+      "clima":{
+        "Tecnología": {"enps":"alto",    "carga":"alta",    "confianza":"alta", "proposito":"mision"},
+        "Ventas":     {"enps":"medio",   "carga":"adecuada","confianza":"media","proposito":"alto"},
+        "I+D":        {"enps":"promotor","carga":"adecuada","confianza":"total","proposito":"mision"}
+      },
+      "tensiones":[
+        {"key":"Tecnología||Ventas","nivel":"media",   "causa":"Tiempos de desarrollo vs promesas comerciales"},
+        {"key":"Tecnología||I+D",   "nivel":"baja",    "causa":"Priorización del backlog"},
+        {"key":"Ventas||I+D",       "nivel":"ninguna", "causa":""}
+      ]
+    },
+    "clima":{"areas":[],"dimensiones":[],"scores":[]}
+  }
+  ];
 }
 
 function loadState() {
